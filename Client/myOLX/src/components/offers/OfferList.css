@@ -1,0 +1,15 @@
+ion-card-subtitle.offer-price {
+    font-size: large;
+    font-weight: 600;
+}
+
+ion-img.offer-image {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+ion-fab-button {
+    width: 150px;
+    --border-radius: 30px;
+}

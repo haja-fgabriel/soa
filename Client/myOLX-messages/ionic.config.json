@@ -1,0 +1,7 @@
+{
+  "name": "myOLX-messages",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

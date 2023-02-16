@@ -1,0 +1,7 @@
+{
+  "name": "myOLX",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

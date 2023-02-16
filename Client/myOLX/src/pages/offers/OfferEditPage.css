@@ -1,0 +1,10 @@
+.add-picture {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.add-picture > ion-icon {
+    font-size: 128px;
+}

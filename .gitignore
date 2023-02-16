@@ -1,0 +1,11 @@
+desktop.ini
+**/node_modules
+**/__pycache__
+*.sqlite3
+*.db
+*.egg-info
+**/build
+**/.vscode
+**/env
+**/venv
+**/.env

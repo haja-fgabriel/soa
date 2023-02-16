@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  my_olx:
+    build: ./my_olx
+    ports:
+      - 8000:8000
+    volumes:
+      - ./my_olx:/app
+
+  my_olx_offers:
+   build: ./my_olx_offers
+   volumes:
+      - ./my_olx_offers:/app
+
+  my_olx_comments:
+    build: ./my_olx_comments
+    volumes:
+      - ./my_olx_comments:/app
+
+  redis
