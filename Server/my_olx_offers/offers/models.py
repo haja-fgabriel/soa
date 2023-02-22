@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from composite_field import CompositeField
 
 CURRENCY_CHOICES = (
@@ -16,3 +17,5 @@ class Offer(models.Model):
     price = PriceField()
     image = models.TextField()
     location = models.CharField(max_length=100)
+    lastUpdated = models.DateTimeField(default=timezone.now)
+    fullDescription = models.TextField(default="")

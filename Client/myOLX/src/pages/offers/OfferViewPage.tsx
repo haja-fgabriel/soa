@@ -1,16 +1,13 @@
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonImg, IonItem, IonLabel, IonList, IonPage, IonText, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
 import { backspace } from "ionicons/icons";
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { RouteComponentProps } from "react-router";
-import { Offer } from "../../core/models/Offer";
+import { Offer } from "../../models/Offer";
 import {chatbubbleEllipsesOutline} from 'ionicons/icons'
 
 import './OfferViewPage.css';
-import { getOfferById } from "../../core/api/offers";
-
-export interface OfferViewProps extends RouteComponentProps<{
-    id?: string;
-}> {}
+import { getOfferById } from "../../api/offers";
+import { AuthContext, AuthState } from "../../auth/AuthProvider";
 
 
 const fullDescription = `
@@ -77,19 +74,24 @@ Contents
 
 `;
 
-const OfferViewPage: React.FC<OfferViewProps> = ({history, match}) => {
+
+const OfferViewPage: React.FC<RouteComponentProps<{id?: string}>> = ({history, match}) => {
     const [offer, setOffer] = useState<Offer | undefined>();
+    const { token } = useContext<AuthState>(AuthContext);
     const id: string | undefined = match.params.id;
 
     useEffect(() => {
         async function getItem() {
             if (!id) return;
-            const item = (await getOfferById(id)).data;
+            const item = (await getOfferById(id, token)).data;
             item.lastUpdated = new Date(item.lastUpdated);
             setOffer(item);
         }
         
-        getItem().catch(console.error);
+        
+        getItem().catch((x) => {
+            console.error(x);
+        });
     }, []);
 
     return (

@@ -4,7 +4,7 @@ export interface Price {
 }
 
 export interface Offer {
-    id: string;
+    id?: string;
     name: string;
     price: Price;
     image: string;

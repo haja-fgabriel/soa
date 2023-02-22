@@ -1,10 +1,11 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonFab, IonFabButton, IonIcon, IonImg, IonLabel, IonList, IonSearchbar } from "@ionic/react";
 import {} from 'ionicons';
 import { add, invertModeSharp } from "ionicons/icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { RouteComponentProps } from "react-router";
-import { getOffers } from "../../core/api/offers";
-import { Offer } from "../../core/models/Offer";
+import { getOffers } from "../../api/offers";
+import { AuthContext, AuthState } from "../../auth/AuthProvider";
+import { Offer } from "../../models/Offer";
 
 import './OfferList.css';
 
@@ -21,20 +22,23 @@ const OfferCard: React.FC<OfferProps> = ({item}) => (
         </IonCardHeader>
         <IonCardContent>
             <IonCardSubtitle>{item.location}</IonCardSubtitle>
-            <IonCardSubtitle>Last updated: {item.lastUpdated.toLocaleString()}</IonCardSubtitle>
+            <IonCardSubtitle>Last updated: {(new Date(item.lastUpdated)).toLocaleString()}</IonCardSubtitle>
         </IonCardContent>
     </IonCard>
 );
 
 export const OfferList: React.FC = () => {
     const [items, setItems] = useState<Offer[]>([]);
+    const { token } = useContext<AuthState>(AuthContext);
     useEffect(() => {
         async function getAll() {
-            const newItems = (await getOffers()).data;
+            const newItems = (await getOffers(token)).data;
             setItems(newItems);
         };
 
-        getAll().catch(console.error);
+        getAll().catch((x) => {
+            console.error(x);
+        });
     }, [])
 
     return (

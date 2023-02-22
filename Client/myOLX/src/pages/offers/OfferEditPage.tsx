@@ -1,10 +1,11 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonList, IonPage, IonPicker, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonList, IonLoading, IonPage, IonPicker, IonText, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
 import {imageOutline, addCircleOutline, checkboxSharp, checkmark, options, images} from 'ionicons/icons';
 import { useCamera } from "@capacitor-community/camera-react";
 import { CameraResultType, CameraSource } from "@capacitor/camera";
 import React, { useState } from "react";
 
 import './OfferEditPage.css';
+import { RouteComponentProps } from "react-router";
 
 interface AddPictureProps {
     source?: string;
@@ -20,13 +21,14 @@ const AddPicture: React.FC<AddPictureProps> = ({source, onEditSource}) => {
     );
 };
 
-export const OfferEditPage: React.FC = () => {
+export const OfferEditPage: React.FC<RouteComponentProps> = () => {
     const [currentPicture, setCurrentPicture] = useState<string | undefined>();
     const [currentName, setCurrentName] = useState<string>("");
     const [currentPrice, setCurrentPrice] = useState<number>(0.00);
     const [fullDescription, setFullDescription] = useState<string>("");
     const [location, setLocation] = useState<string>("");
     const { getPhoto } = useCamera();
+    const [uploading, setUploading] = useState<boolean>(false);
 
     async function pickPicture() {
         const photo = await getPhoto({
@@ -38,7 +40,8 @@ export const OfferEditPage: React.FC = () => {
     }
 
     async function tryAddOffer() {
-         ;
+         setUploading(true);
+         
     }
 
     console.log("OfferEditPage render")
@@ -80,6 +83,14 @@ export const OfferEditPage: React.FC = () => {
                             ]
                             } isOpen={false} />
                     </IonItem>
+                    <IonItem>
+                        <IonLabel>Full description</IonLabel>
+                        <IonTextarea onIonChange={e => setFullDescription(e.detail.value || "")}></IonTextarea>
+                    </IonItem>
+                    <IonItem>
+                        <IonLabel>Location</IonLabel>
+                        <IonInput onIonChange={e => setLocation(e.detail.value || "")}></IonInput>
+                    </IonItem>
                 </IonList>
             </IonContent>
             <IonFab vertical="bottom" horizontal="end">
@@ -88,6 +99,7 @@ export const OfferEditPage: React.FC = () => {
                     <IonLabel>Add offer</IonLabel>
                 </IonFabButton>
             </IonFab>
+            <IonLoading isOpen={uploading} message={"Adding offer..."} />
         </IonPage>
     )
 }

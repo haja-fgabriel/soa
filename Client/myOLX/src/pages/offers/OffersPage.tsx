@@ -1,8 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonLabel, IonToolbar, IonFabButton, IonIcon, IonFab } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import { OfferList } from '../../components/offers/OfferList';
-import ExploreContainer from '../../components/ExploreContainer';
-import './Tab1.css';
+import './OffersPage.css';
 import { RouteComponentProps } from 'react-router';
 
 const OffersPage: React.FC<RouteComponentProps> = () => {

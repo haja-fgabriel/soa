@@ -7,15 +7,38 @@ services:
       - 8000:8000
     volumes:
       - ./my_olx:/app
+    depends_on:
+      - rabbitmq
+    
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.11.9-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    ports:
+      - 15672:15672
+    # volumes:
+    #   - rabbitmq_data:/data
 
   my_olx_offers:
    build: ./my_olx_offers
    volumes:
       - ./my_olx_offers:/app
+   depends_on:
+      - rabbitmq
 
-  my_olx_comments:
-    build: ./my_olx_comments
+  # my_olx_comments:
+  #   build: ./my_olx_comments
+  #   volumes:
+  #     - ./my_olx_comments:/app
+
+  redis:
+    image: redis:7.0.8-alpine
+    command: redis-server --save 60 1 --loglevel warning
     volumes:
-      - ./my_olx_comments:/app
+      - redis_data:/data
 
-  redis
+volumes:
+  redis_data:
+  # rabbitmq_data:
