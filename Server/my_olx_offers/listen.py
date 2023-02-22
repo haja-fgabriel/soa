@@ -19,8 +19,9 @@ def dispatch_message(channel, method, properties, body):
         result = service.get_all_offers()
     elif body.startswith(b"get offer;"):
         pk = body[len("get offer;"):].decode()
-        print(f"pk={pk}")
+        print(f"correlation_id={correlation_id}  pk={pk}")
         result = service.get_offer(pk)
+        print(f"correlation_id={correlation_id};  result={result}")
     r.set(correlation_id, json.dumps(result).encode())
     
 

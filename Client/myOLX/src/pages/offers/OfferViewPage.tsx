@@ -85,6 +85,7 @@ const OfferViewPage: React.FC<RouteComponentProps<{id?: string}>> = ({history, m
             if (!id) return;
             const item = (await getOfferById(id, token)).data;
             item.lastUpdated = new Date(item.lastUpdated);
+            debugger;
             setOffer(item);
         }
         

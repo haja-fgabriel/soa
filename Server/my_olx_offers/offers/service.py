@@ -8,5 +8,6 @@ def get_all_offers():
 
 def get_offer(pk):
     obj = Offer.objects.filter(pk=pk).first()
-    serializer = OfferSerializer(obj)
-    return serializer.data
+    if obj:
+        serializer = OfferSerializer(obj)
+        return serializer.data
